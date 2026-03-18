@@ -3,6 +3,7 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { ConnectionsPage } from './pages/ConnectionsPage'
 import { ContactsPage } from './pages/ContactsPage'
+import { MessagesPage } from './pages/MessagesPage'
 import { PrivateRoute } from './components/PrivateRoute'
 import { AppLayout } from './components/AppLayout'
 
@@ -16,9 +17,7 @@ const App = () => {
           path="/"
           element={
             <PrivateRoute>
-              <AppLayout>
-                <ConnectionsPage />
-              </AppLayout>
+              <AppLayout><ConnectionsPage /></AppLayout>
             </PrivateRoute>
           }
         />
@@ -26,9 +25,15 @@ const App = () => {
           path="/connections/:connectionId/contacts"
           element={
             <PrivateRoute>
-              <AppLayout>
-                <ContactsPage />
-              </AppLayout>
+              <AppLayout><ContactsPage /></AppLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/connections/:connectionId/messages"
+          element={
+            <PrivateRoute>
+              <AppLayout><MessagesPage /></AppLayout>
             </PrivateRoute>
           }
         />
