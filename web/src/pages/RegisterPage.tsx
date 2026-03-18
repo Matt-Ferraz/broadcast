@@ -57,7 +57,13 @@ export const RegisterPage = () => {
             fullWidth
             {...register('password', {
               required: 'Senha obrigatória',
-              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+              minLength: { value: 8, message: 'Mínimo 8 caracteres' },
+              validate: {
+                hasUppercase: (v) => /[A-Z]/.test(v) || 'Precisa ter ao menos uma letra maiúscula',
+                hasLowercase: (v) => /[a-z]/.test(v) || 'Precisa ter ao menos uma letra minúscula',
+                hasNumber: (v) => /\d/.test(v) || 'Precisa ter ao menos um número',
+                hasSpecial: (v) => /[^a-zA-Z0-9]/.test(v) || 'Precisa ter ao menos um caractere especial',
+              },
             })}
             error={!!errors.password}
             helperText={errors.password?.message}

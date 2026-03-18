@@ -143,7 +143,7 @@ export const ConnectionsPage = () => {
       <Dialog open={dialogOpen} onClose={closeDialog} fullWidth maxWidth="xs">
         <DialogTitle>{editing ? 'Editar conexão' : 'Nova conexão'}</DialogTitle>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <DialogContent>
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
             <TextField
               label="Nome da conexão"
               fullWidth

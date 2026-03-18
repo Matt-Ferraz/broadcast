@@ -131,12 +131,20 @@ export const MessagesPage = () => {
         <Typography variant="h5" fontWeight={700} className="flex-1">
           Mensagens
         </Typography>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={openCreate}>
-          Nova mensagem
-        </Button>
+        <Tooltip title={contacts.length === 0 ? 'Cadastre contatos antes de criar uma mensagem' : ''}>
+          <span>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={openCreate}
+              disabled={contacts.length === 0}
+            >
+              Nova mensagem
+            </Button>
+          </span>
+        </Tooltip>
       </Box>
 
-      {/* Filtro por status */}
       <Box className="mb-4">
         <ToggleButtonGroup
           value={statusFilter ?? 'all'}
@@ -214,7 +222,7 @@ export const MessagesPage = () => {
       <Dialog open={dialogOpen} onClose={closeDialog} fullWidth maxWidth="sm">
         <DialogTitle>{editing ? 'Editar mensagem' : 'Nova mensagem'}</DialogTitle>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <DialogContent className="flex flex-col gap-4">
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
             <TextField
               label="Texto da mensagem"
               fullWidth
@@ -260,8 +268,11 @@ export const MessagesPage = () => {
               label="Data e hora de envio"
               type="datetime-local"
               fullWidth
-              InputLabelProps={{ shrink: true }}
-              {...register('scheduledAt', { required: 'Data obrigatória' })}
+              slotProps={{ inputLabel: { shrink: true } }}
+              {...register('scheduledAt', {
+                required: 'Data obrigatória',
+                validate: (v) => new Date(v) > new Date() || 'A data deve ser no futuro',
+              })}
               error={!!errors.scheduledAt}
               helperText={errors.scheduledAt?.message}
             />

@@ -9,7 +9,7 @@ initializeApp();
 setGlobalOptions({ region: "southamerica-east1", maxInstances: 10 });
 
 export const processScheduledMessages = onSchedule(
-  { schedule: "every 1 minutes", region: "southamerica-east1" },
+  { schedule: "every 1 minutes", region: "southamerica-east1", timeoutSeconds: 120, timeZone: "America/Sao_Paulo" },
   async () => {
     const db = getFirestore();
     const now = Timestamp.now();

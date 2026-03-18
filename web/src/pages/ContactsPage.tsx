@@ -30,6 +30,13 @@ import type { Contact } from '../types'
 
 type FormData = { name: string; phone: string }
 
+const formatPhone = (value: string) => {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length <= 10)
+    return digits.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2')
+  return digits.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2')
+}
+
 export const ContactsPage = () => {
   const { connectionId = '' } = useParams()
   const navigate = useNavigate()
@@ -39,7 +46,7 @@ export const ContactsPage = () => {
   const [editing, setEditing] = useState<Contact | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<Contact | null>(null)
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>()
+  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<FormData>()
 
   const openCreate = () => {
     setEditing(null)
@@ -139,7 +146,7 @@ export const ContactsPage = () => {
       <Dialog open={dialogOpen} onClose={closeDialog} fullWidth maxWidth="xs">
         <DialogTitle>{editing ? 'Editar contato' : 'Novo contato'}</DialogTitle>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <DialogContent className="flex flex-col gap-4">
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
             <TextField
               label="Nome"
               fullWidth
@@ -151,7 +158,12 @@ export const ContactsPage = () => {
             <TextField
               label="Telefone"
               fullWidth
-              {...register('phone', { required: 'Telefone obrigatório' })}
+              placeholder="(00) 00000-0000"
+              {...register('phone', {
+                required: 'Telefone obrigatório',
+                validate: (v) => v.replace(/\D/g, '').length >= 10 || 'Telefone inválido',
+              })}
+              onChange={(e) => setValue('phone', formatPhone(e.target.value), { shouldValidate: true })}
               error={!!errors.phone}
               helperText={errors.phone?.message}
             />
