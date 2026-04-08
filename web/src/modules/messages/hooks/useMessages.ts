@@ -1,8 +1,7 @@
-import { useAtomValue } from 'jotai'
-import { messagesAtom } from '@/modules/messages/atoms/messagesAtoms'
+import { useRxValue } from '@/shared/hooks/useObservable'
+import { getMessages } from '@/modules/messages/services/messagesService'
 import type { MessageStatus } from '@/shared/types'
 
 export function useMessages(userId: string, connectionId: string, statusFilter?: MessageStatus) {
-  const data = useAtomValue(messagesAtom({ userId, connectionId, statusFilter }))
-  return { data: data ?? [], loading: data === null }
+  return useRxValue(() => getMessages(userId, connectionId, statusFilter), [userId, connectionId, statusFilter])
 }

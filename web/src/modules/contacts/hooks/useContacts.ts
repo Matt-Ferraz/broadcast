@@ -1,7 +1,6 @@
-import { useAtomValue } from 'jotai'
-import { contactsAtom } from '@/modules/contacts/atoms/contactsAtoms'
+import { useRxValue } from '@/shared/hooks/useObservable'
+import { getContacts } from '@/modules/contacts/services/contactsService'
 
 export function useContacts(userId: string, connectionId: string) {
-  const data = useAtomValue(contactsAtom({ userId, connectionId }))
-  return { data: data ?? [], loading: data === null }
+  return useRxValue(() => getContacts(userId, connectionId), [userId, connectionId])
 }

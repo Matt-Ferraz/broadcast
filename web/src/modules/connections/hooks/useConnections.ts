@@ -1,7 +1,6 @@
-import { useAtomValue } from 'jotai'
-import { connectionsAtom } from '@/modules/connections/atoms/connectionsAtoms'
+import { useRxValue } from '@/shared/hooks/useObservable'
+import { getConnections } from '@/modules/connections/services/connectionsService'
 
 export function useConnections(userId: string) {
-  const data = useAtomValue(connectionsAtom(userId))
-  return { data: data ?? [], loading: data === null }
+  return useRxValue(() => getConnections(userId), [userId])
 }

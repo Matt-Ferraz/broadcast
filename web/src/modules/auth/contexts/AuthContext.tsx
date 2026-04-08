@@ -2,9 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
 import type { User } from 'firebase/auth'
-import { useSetAtom } from 'jotai'
 import { auth } from '@/shared/lib/firebase'
-import { userAtom } from '@/modules/auth/atoms/authAtoms'
 
 interface AuthContextType {
   user: User | null
@@ -30,16 +28,14 @@ export function AuthProvider(props: AuthProviderProps) {
   const { children } = props
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  const setUserAtom = useSetAtom(userAtom)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser)
-      setUserAtom(firebaseUser)
       setLoading(false)
     })
     return unsubscribe
-  }, [setUserAtom])
+  }, [])
 
   const login = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password)
