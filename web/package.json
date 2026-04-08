@@ -16,7 +16,10 @@
     "@mui/material": "^7.3.9",
     "date-fns": "^4.1.0",
     "firebase": "^12.10.0",
+    "jotai": "^2.12.3",
     "react": "^19.2.4",
+    "rxfire": "^6.1.0",
+    "rxjs": "^7.8.2",
     "react-dom": "^19.2.4",
     "react-hook-form": "^7.71.2",
     "react-router-dom": "^7.13.1"
