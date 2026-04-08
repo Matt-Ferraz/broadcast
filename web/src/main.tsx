@@ -1,13 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider } from 'jotai'
 import './index.css'
 import App from './App.tsx'
-import { AuthProvider } from './contexts/AuthContext'
+import { AuthProvider } from '@/modules/auth'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <Provider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
   </StrictMode>,
 )

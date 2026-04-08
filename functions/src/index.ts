@@ -34,5 +34,3 @@ export const processScheduledMessages = onSchedule(
     logger.info(`${snapshot.size} mensagem(ns) marcada(s) como enviada(s).`);
   }
 );
-//   response.send("Hello from Firebase!");
-// });

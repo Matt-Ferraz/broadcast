@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { LoginPage } from './pages/LoginPage'
-import { RegisterPage } from './pages/RegisterPage'
-import { ConnectionsPage } from './pages/ConnectionsPage'
-import { ContactsPage } from './pages/ContactsPage'
-import { MessagesPage } from './pages/MessagesPage'
-import { PrivateRoute } from './components/PrivateRoute'
-import { AppLayout } from './components/AppLayout'
+import { LoginPage, RegisterPage, PrivateRoute } from '@/modules/auth'
+import { ConnectionsPage } from '@/modules/connections'
+import { ContactsPage } from '@/modules/contacts'
+import { MessagesPage } from '@/modules/messages'
+import { AppLayout } from '@/shared'
 
-const App = () => {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -42,5 +40,3 @@ const App = () => {
     </BrowserRouter>
   )
 }
-
-export default App
